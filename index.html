@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleeping Potato's Homepage</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+        </style>
+</head>
+<body>
+    <style>
+        body {
+          margin-top: 35px;
+        }
+        .support-palestine,
+        .support-palestine:visited {
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          background: rgb(0, 0, 0);
+          display: flex;
+          justify-content: center;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          z-index: 10000;
+          text-decoration: none;
+          font-family: arial;
+        }
+        .support-palestine:hover,
+        .support-palestine:active {
+          background: black;
+          display: flex;
+          background: rgb(80, 80, 80);
+          text-decoration: none;
+        }
+        .support-palestine__flag {
+          margin-right: 10px;
+        }
+      
+        .support-palestine__label {
+          color: white;
+          font-size: 12px;
+          line-height: 24px;
+        }
+        .background {
+          background: darkgreen;
+      
+          height: 21px;
+        }
+        .top {
+          background: black;
+          width: 40px;
+          height: 8px;
+          z-index: 1;
+        }
+        .middle {
+          background: white;
+          width: 100%;
+          height: 8px;
+          z-index: 1;
+        }
+        .triangle {
+          background: auto;
+          border-top: 12px solid transparent;
+          border-bottom: 12px solid transparent;
+          border-left: 20px solid red;
+          z-index: 2;
+          position: relative;
+          top: -16px;
+          left: 0;
+        }
+      </style>
+      <a
+        class="support-palestine"
+        href="https://www.islamic-relief.org.uk/giving/appeals/palestine/"
+        target="_blank"
+        rel="nofollow noopener"
+        title="Donate to support palestine"
+      >
+        <div
+          class="support-palestine__flag"
+          role="img"
+          aria-label="Flag of palestine"
+        >
+          <div class="background">
+            <div class="top"></div>
+            <div class="middle"></div>
+            <div class="triangle"></div>
+          </div>
+        </div>
+        <div class="support-palestine__label">Donate to support Palestine</div>
+      </a>
+
+    <div class="container">
+        <h1 class="greet">Hello there!</h1>
+        <img class="pfp" src="assets/pfp.jpg">
+
+        <h2 class="intro">welcome to my webpage!</h2>
+        <h2 class="intro">My name is Salem!</h2>
+        <h2 class="intro2">what do you want to see?</h2>
+
+        <div class="sections">
+            <a href="sections/notes/Index/index.html"><button style="height: 100px; background-color: darkcyan;">Daily Notes! 🗒️</button></a>
+        </div>
+        
+        <h1 style="font-size: 65px;">more coming soon!</h1>
+    </div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+body {
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fab%2Ffb%2F36%2Fabfb361e405a15980f0a0f65b2273443.jpg&f=1&nofb=1&ipt=b8dde23dbf6b350f34aec20cf2b52dd93dac517d6257d3905bcdebce644a7887&ipo=images");
+
+    background-position: 0px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+
+    font-family: "Ubuntu", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+a.nav-link:link
+{
+   color: #000000;
+   text-decoration: none;
+}
+a.nav-link:visited
+{
+   color: #000000;
+   text-decoration: none;
+}
+a.nav-link:hover
+{
+   color: #000000;
+   text-decoration: none;
+}
+a.nav-link:active
+{
+   color: #000000;
+   text-decoration: none;
+}
+
+.greet {
+    font-size: 50px;
+}
+
+.pfp {
+    width: 250px;
+    border-radius: 100%;
+
+    margin-top: 25px;
+}
+
+.intro {
+    font-size: 35px;
+}
+
+.sections {
+    display: grid;
+}
