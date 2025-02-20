@@ -1,52 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
-<url>
-  <loc>https://69420gaming.github.io/</loc>
-  <lastmod>2025-02-20T11:49:14+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://69420gaming.github.io/sections/notes/Index/index.html</loc>
-  <lastmod>2025-02-20T11:49:14+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://69420gaming.github.io/sections/gallery/index.html</loc>
-  <lastmod>2025-02-20T11:49:14+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://69420gaming.github.io/sections/fun/index.html</loc>
-  <lastmod>2025-02-20T11:49:14+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://69420gaming.github.io/index.html</loc>
-  <lastmod>2025-02-20T11:49:14+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://69420gaming.github.io/sections/notes/Date/Jan%202025/index.html</loc>
-  <lastmod>2025-02-20T11:49:14+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://69420gaming.github.io/sections/notes/Date/Dec%202024/index.html</loc>
-  <lastmod>2025-02-20T11:49:14+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-<url>
-  <loc>https://69420gaming.github.io/sections/gallery/Category/Food/food.html</loc>
-  <lastmod>2025-02-20T11:49:14+00:00</lastmod>
-  <priority>0.64</priority>
-</url>
-
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>https://www.69420gaming.github.io</loc>
+		<priority>1.00</priority>
+		<lastmod>2025-02-20</lastmod>
+	</url>
+	<url>
+		<loc>https://www.69420gaming.github.io/sections/gallery</loc>
+		<priority>0.67</priority>
+		<lastmod>2025-02-16</lastmod>
+	</url>
+	<url>
+		<loc>https://www.69420gaming.github.io/sections/fun</loc>
+		<priority>0.67</priority>
+		<lastmod>2025-02-20</lastmod>
+	</url>
+	<url>
+		<loc>https://www.69420gaming.github.io/sections/notes/Index</loc>
+		<priority>0.50</priority>
+		<lastmod>2025-02-20</lastmod>
+	</url>
+	<url>
+		<loc>https://www.69420gaming.github.io/sections/notes/Date/Jan-2025</loc>
+		<priority>0.33</priority>
+		<lastmod>2025-02-16</lastmod>
+	</url>
+	<url>
+		<loc>https://www.69420gaming.github.io/sections/notes/Date/Dec-2024</loc>
+		<priority>0.33</priority>
+		<lastmod>2025-02-16</lastmod>
+	</url>
+	<url>
+		<loc>https://www.69420gaming.github.io/sections/fun/Index/Subscriptions-rant.html</loc>
+		<priority>0.33</priority>
+		<lastmod>2025-02-20</lastmod>
+	</url>
+	<url>
+		<loc>https://www.69420gaming.github.io/sections/gallery/Category/Food/food.html</loc>
+		<priority>0.17</priority>
+		<lastmod>2025-02-16</lastmod>
+	</url>
 </urlset>
