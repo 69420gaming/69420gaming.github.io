@@ -1,16 +1,22 @@
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     margin: auto;
+    
+    margin-top: 30px;
 
     word-wrap: break-word;
     width: 500px;
 }
 
-.container.p {
-    font-size: 17.5px;
+.title, .info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  
+  text-align: center;
 }
 
 h4 {
