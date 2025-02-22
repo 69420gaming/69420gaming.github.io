@@ -10,7 +10,7 @@
     width: 500px;
 }
 
-.title, .info {
+.title, .info, .license {
   display: flex;
   flex-direction: column;
   justify-content: center;
