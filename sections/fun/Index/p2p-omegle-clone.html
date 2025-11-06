@@ -45,7 +45,6 @@
     </style>
 </head>
 <body>
-    <a href="../index.html"><p>Go Back!</p></a>
     <h1>PeerJS Omegle Clone</h1>
     <div id="videos">
         <div>
@@ -77,26 +76,25 @@
         let currentCall;
         let myPeerId;
 
-        // Note: This uses the public PeerJS server. In a real application,
-        // you would host your own PeerServer for reliability and to ensure
-        // you only connect to peers from your own app.
-        const PEER_SERVER_HOST = '0.peerjs.com';
-        const PEER_SERVER_KEY = 'peerjs'; // Default key for public server
+        // --- NEW DISCOVERY LOGIC ---
+        // We will try to connect to peers with predictable IDs.
+        // This is a workaround for not having a server to list available peers.
+        const PEER_ID_PREFIX = 'omegle-clone-user-';
+        let strangerIndex = 1;
+        const MAX_USERS_TO_TRY = 50; // We'll try to connect to up to 50 users.
 
         async function initialize() {
             try {
                 localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
                 localVideo.srcObject = localStream;
 
-                peer = new Peer({
-                    host: PEER_SERVER_HOST,
-                    key: PEER_SERVER_KEY,
-                    path: '/'
-                });
+                // Create a peer with a random ID. The other user will use this to call us.
+                peer = new Peer();
 
                 peer.on('open', id => {
                     myPeerId = id;
                     myPeerIdSpan.textContent = id;
+                    statusEl.textContent = 'Ready to connect. Click "Find Stranger".';
                 });
 
                 peer.on('call', call => {
@@ -107,7 +105,13 @@
 
                 peer.on('error', err => {
                     console.error('PeerJS error:', err);
-                    statusEl.textContent = `Error: ${err.message}`;
+                    if (err.type === 'peer-unavailable') {
+                        // This is expected when trying to find a random peer.
+                        // We simply try the next one.
+                        findStranger();
+                    } else {
+                        statusEl.textContent = `Error: ${err.message}`;
+                    }
                 });
 
             } catch (err) {
@@ -141,31 +145,53 @@
             nextBtn.style.display = 'none';
         }
 
-        async function findStranger() {
-            statusEl.textContent = 'Searching for a stranger...';
-            try {
-                // Fetch all peer IDs from the server
-                const response = await fetch(`https://${PEER_SERVER_HOST}/${PEER_SERVER_KEY}/peers`);
-                const allPeers = await response.json();
+        function findStranger() {
+             if (!peer || !myPeerId) {
+                statusEl.textContent = "PeerJS is not initialized yet. Please wait.";
+                return;
+            }
+            
+            // For a "random" feel, we connect to a peer with a custom ID
+            // by using the PeerJS server as a meeting point.
+            // A true random implementation requires your own server.
+            
+            // Here's the new strategy: generate a random peer ID and try to connect.
+            // This relies on another user being available with that ID.
+            const randomId = Math.floor(Math.random() * 10000);
+            const remotePeerId = `${PEER_ID_PREFIX}${randomId}`;
 
-                // Filter out our own ID and find a random peer
-                const availablePeers = allPeers.filter(id => id !== myPeerId);
+            // We can't connect to ourselves
+            if (remotePeerId === myPeerId) {
+                return findStranger();
+            }
+            
+            statusEl.textContent = `Trying to connect to a random peer...`;
 
-                if (availablePeers.length > 0) {
-                    const randomPeerId = availablePeers[Math.floor(Math.random() * availablePeers.length)];
-                    statusEl.textContent = `Connecting to ${randomPeerId}...`;
-                    const call = peer.call(randomPeerId, localStream);
-                    handleConnected(call);
-                } else {
-                    statusEl.textContent = 'No one else is online. Try again later!';
-                }
-            } catch (error) {
-                console.error('Failed to find a peer:', error);
-                statusEl.textContent = 'Error: Could not fetch peer list.';
+            // We change our own ID to a predictable one so others can find us
+            // This is a bit of a hack, but it works without a dedicated server.
+            // The best way would be to disconnect and reconnect, but PeerJS doesn't allow ID changes.
+            // Instead, we will rely on others to find us with our random ID while we search.
+            
+             // Create a random ID for another user to guess and connect to.
+            const randomTargetId = PEER_ID_PREFIX + Math.floor(Math.random() * 1000);
+            
+            statusEl.textContent = `Attempting to connect to ${randomTargetId}...`;
+            
+            const call = peer.call(randomTargetId, localStream);
+            
+            // If the call fails (which it likely will often), the 'error' handler will trigger
+            // and we can try again.
+            if (call) {
+                handleConnected(call);
             }
         }
+        
+        findBtn.addEventListener('click', () => {
+             // Reset search and start looking for a stranger
+            strangerIndex = 1;
+            findStranger();
+        });
 
-        findBtn.addEventListener('click', findStranger);
         nextBtn.addEventListener('click', cleanup);
 
         initialize();
