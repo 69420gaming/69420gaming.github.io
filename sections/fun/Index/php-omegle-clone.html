@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeerJS Omegle Clone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #videos {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        video {
+            width: 400px;
+            height: 300px;
+            border: 2px solid #333;
+            background-color: #000;
+            transform: scaleX(-1); /* Mirror effect */
+        }
+        #controls {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            min-width: 150px;
+        }
+        #status {
+            margin-top: 15px;
+            font-style: italic;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html"><p>Go Back!</p></a>
+    <h1>PeerJS Omegle Clone</h1>
+    <div id="videos">
+        <div>
+            <h2>You</h2>
+            <video id="localVideo" autoplay muted></video>
+        </div>
+        <div>
+            <h2>Stranger</h2>
+            <video id="remoteVideo" autoplay></video>
+        </div>
+    </div>
+    <div id="controls">
+        <button id="findBtn">Find Stranger</button>
+        <button id="nextBtn" style="display: none;">Next</button>
+    </div>
+    <p id="status">Your Peer ID: <span id="myPeerId"></span></p>
+
+    <script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
+    <script>
+        const localVideo = document.getElementById('localVideo');
+        const remoteVideo = document.getElementById('remoteVideo');
+        const findBtn = document.getElementById('findBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const myPeerIdSpan = document.getElementById('myPeerId');
+        const statusEl = document.getElementById('status');
+
+        let localStream;
+        let peer;
+        let currentCall;
+        let myPeerId;
+
+        // Note: This uses the public PeerJS server. In a real application,
+        // you would host your own PeerServer for reliability and to ensure
+        // you only connect to peers from your own app.
+        const PEER_SERVER_HOST = '0.peerjs.com';
+        const PEER_SERVER_KEY = 'peerjs'; // Default key for public server
+
+        async function initialize() {
+            try {
+                localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                localVideo.srcObject = localStream;
+
+                peer = new Peer({
+                    host: PEER_SERVER_HOST,
+                    key: PEER_SERVER_KEY,
+                    path: '/'
+                });
+
+                peer.on('open', id => {
+                    myPeerId = id;
+                    myPeerIdSpan.textContent = id;
+                });
+
+                peer.on('call', call => {
+                    // Someone is calling us. Answer the call.
+                    call.answer(localStream);
+                    handleConnected(call);
+                });
+
+                peer.on('error', err => {
+                    console.error('PeerJS error:', err);
+                    statusEl.textContent = `Error: ${err.message}`;
+                });
+
+            } catch (err) {
+                console.error('Failed to get local stream', err);
+                statusEl.textContent = 'Error: Could not access your camera or microphone.';
+            }
+        }
+
+        function handleConnected(call) {
+            currentCall = call;
+            statusEl.textContent = "Connected!";
+            findBtn.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+
+            call.on('stream', remoteStream => {
+                remoteVideo.srcObject = remoteStream;
+            });
+
+            call.on('close', cleanup);
+            call.on('error', cleanup);
+        }
+
+        function cleanup() {
+            if (currentCall) {
+                currentCall.close();
+                currentCall = null;
+            }
+            remoteVideo.srcObject = null;
+            statusEl.textContent = "Disconnected. Find a new stranger!";
+            findBtn.style.display = 'inline-block';
+            nextBtn.style.display = 'none';
+        }
+
+        async function findStranger() {
+            statusEl.textContent = 'Searching for a stranger...';
+            try {
+                // Fetch all peer IDs from the server
+                const response = await fetch(`https://${PEER_SERVER_HOST}/${PEER_SERVER_KEY}/peers`);
+                const allPeers = await response.json();
+
+                // Filter out our own ID and find a random peer
+                const availablePeers = allPeers.filter(id => id !== myPeerId);
+
+                if (availablePeers.length > 0) {
+                    const randomPeerId = availablePeers[Math.floor(Math.random() * availablePeers.length)];
+                    statusEl.textContent = `Connecting to ${randomPeerId}...`;
+                    const call = peer.call(randomPeerId, localStream);
+                    handleConnected(call);
+                } else {
+                    statusEl.textContent = 'No one else is online. Try again later!';
+                }
+            } catch (error) {
+                console.error('Failed to find a peer:', error);
+                statusEl.textContent = 'Error: Could not fetch peer list.';
+            }
+        }
+
+        findBtn.addEventListener('click', findStranger);
+        nextBtn.addEventListener('click', cleanup);
+
+        initialize();
+
+    </script>
+</body>
+</html>

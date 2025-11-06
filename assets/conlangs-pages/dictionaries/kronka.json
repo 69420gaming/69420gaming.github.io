@@ -1,0 +1,26 @@
+{
+  "Language": "Kronka",
+  "Dictionary": [
+    {
+      "Word": "Saluta",
+      "PartOfSpeech": "Greeting",
+      "Translation": "Hello",
+      "ExampleUsage": "Saluta! Krona ta?",
+      "ExampleUsageTranslated": "Hello! How are you?"
+    },
+    {
+      "Word": "ta",
+      "PartOfSpeech": "Pronoun",
+      "Translation": "You",
+      "ExampleUsage": "ta e ti",
+      "ExampleUsageTranslated": "you and me"
+    },
+    {
+      "Word": "ti",
+      "PartOfSpeech": "Pronoun",
+      "Translation": "Me/I",
+      "ExampleUsage": "leh ta krateh ti?",
+      "ExampleUsageTranslated": "Why do you hate me?"
+    }
+  ]
+}
